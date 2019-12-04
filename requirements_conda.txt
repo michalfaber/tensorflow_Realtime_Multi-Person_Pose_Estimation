@@ -1,0 +1,7 @@
+conda install -c anaconda tensorflow-gpu==2.0.0
+conda install -c conda-forge opencv==4.1.2
+conda install -c conda-forge matplotlib==3.1.2
+conda install pip
+pip install tensorpack==0.9.8
+conda install -c conda-forge pycocotools=2.0.0
+conda install -c anaconda jupyter==1.0.0

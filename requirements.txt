@@ -1,0 +1,8 @@
+opencv-python-headless==4.1.2.30
+tensorflow-gpu==2.0.0
+matplotlib==3.1.2
+tensorpack==0.9.8
+scipy==1.3.3
+cython==0.29.14
+pycocotools==2.0.0
+jupyter==1.0.0
