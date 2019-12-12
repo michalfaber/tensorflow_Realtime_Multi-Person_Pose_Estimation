@@ -5,6 +5,8 @@ This repo contains a new upgraded version of the **keras_Realtime_Multi-Person_P
 I added a new model based on MobileNetV2 for mobile devices. 
 You can train it from scratch in the same way as the CMU model. There is still room for performance improvement, like quantization training, which I will add as a next step.
 
+[Download](https://www.dropbox.com/s/gif7s1qlie2xftd/best_pose_mobilenet_model.zip?dl=1) the model and checkpoints.
+
 I didn't change much the augmentation process as the tensorpack does a good job. The only changes I have made are in fetching samples to the model. I added the interface Dataset as recommended by Tensorflow.
 
 It is worth to mention that I purposely didn't use the Keras interface **model.compile, model.run** as I had problems with loss regularizers - I kept getting NaN after a few iterations. I suspect that the solution would be to add loss to the input tensor: *add_loss(tf.abs(tf.reduce_mean(x)))*. I will update the repo as soon as I get satisfactory results.
