@@ -211,9 +211,10 @@ def train(ds_train, ds_val, model, optimizer, ckpt, saved_weights_path, last_epo
                          'Loss heatmap', losses[11], 'Total loss', total_loss)
 
                 with train_summary_writer.as_default():
-                    tf.summary.scalar('loss', train_loss.result(), step=epoch * step)
-                    tf.summary.scalar('loss_heatmap', train_loss_heatmap.result(), step=epoch * step)
-                    tf.summary.scalar('loss_paf', train_loss_paf.result(), step=epoch * step)
+                    summary_step = (epoch - 1) * steps_per_epoch + step - 1
+                    tf.summary.scalar('loss', train_loss.result(), step=summary_step)
+                    tf.summary.scalar('loss_heatmap', train_loss_heatmap.result(), step=summary_step)
+                    tf.summary.scalar('loss_paf', train_loss_paf.result(), step=summary_step)
 
             if step % 100 == 0:
                 figure = probe_model(model)
