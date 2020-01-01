@@ -1,8 +1,8 @@
 # Tensorflow 2.0 Realtime Multi-Person Pose Estimation
 
-This repo contains a new upgraded version of the **keras_Realtime_Multi-Person_Pose_Estimation** project. It is ready for the new Tensorflow 2.0. 
+This repo contains a new upgraded version of the **keras_Realtime_Multi-Person_Pose_Estimation** project. It is ready for the new Tensorflow 2.0.
 
-I added a new model based on MobileNetV2 for mobile devices. 
+I added a new model based on MobileNetV2 for mobile devices.
 You can train it from scratch in the same way as the CMU model. There is still room for performance improvement, like quantization training, which I will add as a next step.
 
 [Download](https://www.dropbox.com/s/gif7s1qlie2xftd/best_pose_mobilenet_model.zip?dl=1) the model and checkpoints.
@@ -14,14 +14,6 @@ It is worth to mention that I purposely didn't use the Keras interface **model.c
 I added a visualization of final heatmaps and pafs in the Tensorboard.
 Every 100 iterations, a single image is passed to the model. The predicted heatmaps and pafs are logged in the Tensorboard.
 You can check this visual representation of prediction every few minutes/hours as it gives a good sense of how the training performs.
-
-
-More stuff about the pose-estimation problem from a software engineer's perspective is on my blog:
- 
-**[https://worldestimators.com](https://worldestimators.com)**
-
-
-In addition to blog posts, you'll also find a source code of sample Android Pose-Estimator app for download. This app uses a small pose-estimation model trained by the script **train_custom_loop_mobilenet.py**.  I trained it only for about 6-hours on a single 1070 GPU, and I got quite promising results.
 
 # Scripts and notebooks
 
@@ -84,5 +76,5 @@ pip install -r requirements_all.txt # completely frozen environment with all dep
 conda create --name tf_pose_estimation_env
 conda activate tf_pose_estimation_env
 
-bash requirements_conda.txt 
+bash requirements_conda.txt
 ```
