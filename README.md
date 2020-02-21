@@ -33,6 +33,8 @@ This project contains the following scripts and jupyter notebooks:
 
 **test_tflite_model.ipynb** - helper notebook to verify exported *TFLite* model.
 
+**estimation_example/** - This is an example demonstrating the estimation algorithm. Here you will find sample heatmaps and pafs dumped into numpy arrays (*.npy) and some scripts: *coordinates.py*, *connections.py*, *estimators.py* containing the code for each step of the estimation algorithm. You can run these scripts separately to better understand each step. In addition, there is the script: *example.py* that shows all the steps together. This script creates an output image with the connections.  
+
 # Installation
 
 ## Prerequisites
