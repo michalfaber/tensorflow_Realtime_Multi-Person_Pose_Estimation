@@ -1,4 +1,5 @@
 import io
+import cv2
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -91,3 +92,88 @@ def pad_right_down_corner(img, stride, pad_value):
     img_padded = np.concatenate((img_padded, pad_right), axis=1)
 
     return img_padded, pad
+
+
+def probe_model_singlenet(model, test_img_path):
+    img = cv2.imread(test_img_path)  # B,G,R order
+    input_img = img[np.newaxis, :, :, [2, 1, 0]]
+    inputs = tf.convert_to_tensor(input_img)
+    output_blobs = model.predict(inputs)
+
+    paf1 = output_blobs[0]
+    paf2 = output_blobs[1]
+    paf3 = output_blobs[2]
+    heatmap1 = output_blobs[3]
+
+    figure = plt.figure(figsize=(10, 10))
+
+    plt.subplot(2, 2, 1, title='stage 1 - paf')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(paf1[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 2, title='stage 2 - paf')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(paf2[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 3, title='stage 3 - paf')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(paf3[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 4, title='stage 4 - heatmaps')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(heatmap1[0, :, :, 0], cmap='gray')
+
+    return figure
+
+
+def probe_model_2br_vgg(model, test_img_path):
+    img = cv2.imread(test_img_path)  # B,G,R order
+    input_img = img[np.newaxis, :, :, [2, 1, 0]]
+    inputs = tf.convert_to_tensor(input_img)
+
+    output_blobs = model.predict([
+        inputs,
+        tf.ones((1, 46, 46, 38), dtype=tf.dtypes.float32),
+        tf.ones((1, 46, 46, 19), dtype=tf.dtypes.float32)
+    ])
+
+    paf1 = output_blobs[10]
+    paf2 = output_blobs[8]
+    heatmap1 = output_blobs[11]
+    heatmap2 = output_blobs[9]
+
+    figure = plt.figure(figsize=(10, 10))
+
+    plt.subplot(2, 2, 1, title='stage 6 - paf')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(paf1[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 2, title='stage 5 - paf')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(paf2[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 3, title='stage 6 - heatmap')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(heatmap1[0, :, :, 0], cmap='gray')
+
+    plt.subplot(2, 2, 4, title='stage 5 - heatmap')
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(heatmap2[0, :, :, 0], cmap='gray')
+
+    return figure
