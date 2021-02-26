@@ -14,13 +14,12 @@ from estimation.renderers import draw
 from train_singlenet_mobilenetv3 import register_tf_netbuilder_extensions
 
 
-def process_frame(cropped, heatmap_idx, model, paf_idx, output_resize_factor):
+def process_frame(cropped, heatmap_idx, model, paf_idx, output_resize_factor, cfg):
     input_img = cropped[np.newaxis, ...]
     inputs = tf.convert_to_tensor(input_img)
     outputs = model.predict(inputs)
     pafs = outputs[paf_idx][0, ...]
     heatmaps = outputs[heatmap_idx][0, ...]
-    cfg = get_default_configuration()
     coordinates = get_coordinates(cfg, heatmaps)
     connections = get_connections(cfg, coordinates, pafs)
     skeletons = estimate(cfg, connections)
@@ -73,6 +72,9 @@ def main(video, output_video, create_model_fn, input_size, output_resize_factor,
     scale = input_size / w if w < h else input_size / h
     out = cv2.VideoWriter(output_video, fourcc, output_fps, (input_size, input_size))
 
+    # load configs
+    cfg = get_default_configuration()
+
     i = 0
     while (cam.isOpened()) and ret_val is True and i < frames_to_analyze:
         if i % frame_ratio == 0:
@@ -89,7 +91,7 @@ def main(video, output_video, create_model_fn, input_size, output_resize_factor,
                 offset = (new_h - input_size) // 2
                 cropped = im[offset: offset + input_size, 0: input_size]
 
-            canvas = process_frame(cropped, heatmap_idx, model, paf_idx, output_resize_factor)
+            canvas = process_frame(cropped, heatmap_idx, model, paf_idx, output_resize_factor, cfg)
 
             print('Processing frame: ', i)
             toc = time.time()
