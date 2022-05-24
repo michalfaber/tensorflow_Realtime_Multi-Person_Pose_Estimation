@@ -1,4 +1,4 @@
-tensorflow-gpu==2.2.1
+tensorflow-gpu==2.6.4
 opencv-python-headless==4.1.2.30
 tqdm==4.50.0
 matplotlib==3.3.2
